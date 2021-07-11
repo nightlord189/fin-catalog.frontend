@@ -1,5 +1,7 @@
+/* eslint-disable no-else-return */
 /* eslint-disable no-mixed-operators */
 import { makeAutoObservable } from 'mobx';
+import Decimal from 'decimal.js';
 
 class MainStore {
   deposits = [
@@ -30,7 +32,7 @@ class MainStore {
   ];
 
   calculator = {
-    rate: 10,
+    rate: 9.6,
     term: 12,
     amount: 1000,
     capitalization: false,
@@ -50,20 +52,21 @@ class MainStore {
 
   get depositResult() {
     const data = this.calculator;
+    const amountDecimal = new Decimal(data.amount);
+    const rateDecimal = (new Decimal(data.rate)).dividedBy(new Decimal(100.0)).dividedBy(12);
     if (data.capitalization) {
-      let result = data.amount;
+      let result = new Decimal(data.amount);
       for (let i = 0; i < data.term; i += 1) {
-        result += result * data.rate / 100.0;
+        result = result.plus(result.mul(rateDecimal));
       }
       return result;
+    } else {
+      let result = new Decimal(0);
+      for (let i = 0; i < data.term; i += 1) {
+        result = result.plus(amountDecimal.mul(rateDecimal));
+      }
+      return amountDecimal.plus(result);
     }
-    let result = 0;
-    for (let i = 0; i < data.term; i += 12) {
-      result += data.amount * data.rate / 100.0;
-      // console.log(data.amount * data.rate / 100.0);
-    }
-    console.log(result);
-    return result + data.amount;
   }
 }
 

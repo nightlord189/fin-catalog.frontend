@@ -4,6 +4,8 @@ import { observer } from 'mobx-react';
 import {
   Form,
 } from 'react-bootstrap';
+import Decimal from 'decimal.js';
+import toFormat from 'toformat';
 import MainStore from '../store/main.js';
 
 const DepoCalculator = () => {
@@ -16,12 +18,14 @@ const DepoCalculator = () => {
   };
 
   const handleChangeCapitalization = (e) => {
-    MainStore.calculator.term = e.target.value;
+    MainStore.calculator.capitalization = e.target.checked;
   };
 
   const handleChangeAmount = (e) => {
     MainStore.calculator.amount = e.target.value;
   };
+
+  toFormat(Decimal);
 
   return (
     <>
@@ -36,14 +40,14 @@ const DepoCalculator = () => {
           <Form.Control type="number" min={1} value={MainStore.calculator.term} onChange={handleChangeTerm} />
         </Form.Group>
         <Form.Group controlId="capitalization">
-          <Form.Check type="checkbox" label="Капитализация" value={MainStore.calculator.capitalization} onChange={handleChangeCapitalization} />
+          <Form.Check type="checkbox" label="Капитализация" checked={MainStore.calculator.capitalization} onChange={handleChangeCapitalization} />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Сумма</Form.Label>
           <Form.Control type="number" value={MainStore.calculator.amount} onChange={handleChangeAmount} />
         </Form.Group>
-        <p>{`Через ${12} месяцев: ${MainStore.depositResult}`}</p>
+        <p>{`Через ${MainStore.calculator.term} месяцев: ${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
       </Form>
     </>
   );
