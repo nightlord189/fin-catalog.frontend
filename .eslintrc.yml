@@ -12,4 +12,6 @@ parserOptions:
   sourceType: module
 plugins:
   - react
-rules: {}
+parser: babel-eslint
+rules: 
+  import/extensions: 0

@@ -1,38 +1,26 @@
-import React from "react";
+import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import AppNavbar from './AppNavbar.jsx';
+import Deposits from './Deposits.jsx';
+import About from './About.jsx';
 
-
-const App = () => {
-    return (
-        <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Депозиты</Link>
-              </li>
-              <li>
-                <Link to="/about">О проекте</Link>
-              </li>
-            </ul>
-          </nav>
-          <div className="App">
-            <h1>Test1</h1>
-          </div> 
-          <Switch>
-            <Route path="/about">
-            </Route>
-            <Route path="/">
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    );
-}
+const App = () => (
+  <Router>
+    <AppNavbar />
+    <Switch>
+      <Route path="/about">
+        <About />
+      </Route>
+      <Route path="/deposits">
+        <Deposits />
+      </Route>
+      <Route path="/" />
+    </Switch>
+  </Router>
+);
 
 export default App;
