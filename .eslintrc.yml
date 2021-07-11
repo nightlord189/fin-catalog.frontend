@@ -15,3 +15,7 @@ plugins:
 parser: babel-eslint
 rules: 
   import/extensions: 0
+  quotes:
+    - error
+    - single
+    - allowTemplateLiterals: true
