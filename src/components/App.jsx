@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from 'react-router-dom';
 import AppNavbar from './AppNavbar.jsx';
 import Deposits from './Deposits.jsx';
@@ -18,7 +19,9 @@ const App = () => (
       <Route path="/deposits">
         <Deposits />
       </Route>
-      <Route path="/" />
+      <Route path="/">
+        <Redirect to="/deposits" />
+      </Route>
     </Switch>
   </Router>
 );
