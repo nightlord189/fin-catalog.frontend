@@ -26,7 +26,9 @@ const DepoCalculator = () => {
   };
 
   const handleChangeAmount = (e) => {
-    MainStore.calculator.amount = e.target.value;
+    if (!e.target.validity.badInput) {
+      MainStore.calculator.amount = e.target.value;
+    }
   };
 
   toFormat(Decimal);
@@ -49,7 +51,7 @@ const DepoCalculator = () => {
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Сумма</Form.Label>
-          <Form.Control type="number" value={MainStore.calculator.amount} onChange={handleChangeAmount} />
+          <Form.Control type="number" min={0} value={MainStore.calculator.amount} onChange={handleChangeAmount} />
         </Form.Group>
         <p>{`Через ${MainStore.calculator.term} месяцев: ${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
       </Form>
