@@ -1,8 +1,11 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-useless-concat */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { observer } from 'mobx-react';
 import {
-  Form,
+  Form, OverlayTrigger, Tooltip,
 } from 'react-bootstrap';
 import Decimal from 'decimal.js';
 import toFormat from 'toformat';
@@ -31,6 +34,12 @@ const DepoCalculator = () => {
     }
   };
 
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      При включенной капитализации проценты будут начисляться также на уже начисленные проценты за вклад
+    </Tooltip>
+  );
+
   toFormat(Decimal);
 
   return (
@@ -45,15 +54,22 @@ const DepoCalculator = () => {
           <Form.Label>Срок, месяцев</Form.Label>
           <Form.Control type="number" min={1} value={MainStore.calculator.term} onChange={handleChangeTerm} />
         </Form.Group>
-        <Form.Group controlId="capitalization">
-          <Form.Check type="checkbox" label="Капитализация" checked={MainStore.calculator.capitalization} onChange={handleChangeCapitalization} />
-        </Form.Group>
+        <OverlayTrigger
+          placement="left"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip}
+        >
+          <Form.Group controlId="capitalization">
+            <Form.Check type="checkbox" label="Капитализация" checked={MainStore.calculator.capitalization} onChange={handleChangeCapitalization} />
+          </Form.Group>
+
+        </OverlayTrigger>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Сумма</Form.Label>
           <Form.Control type="number" min={0} value={MainStore.calculator.amount} onChange={handleChangeAmount} />
         </Form.Group>
-        <p>{`Через ${MainStore.calculator.term} месяцев: ${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
+        <p style={{ whiteSpace: 'pre' }}>{`Через ${MainStore.calculator.term} месяцев: \n${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
       </Form>
     </>
   );
