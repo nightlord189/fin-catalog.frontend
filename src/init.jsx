@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // eslint-disable-next-line import/extensions
+import { configure } from 'mobx';
 import App from './components/App.jsx';
 
 const init = async () => {
+  configure({
+    enforceActions: 'never',
+  });
+
   ReactDOM.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
+    <App />,
     document.getElementById('root'),
   );
 };

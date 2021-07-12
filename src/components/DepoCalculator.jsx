@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-useless-concat */
@@ -5,7 +6,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import {
-  Form, OverlayTrigger, Tooltip,
+  Form, OverlayTrigger, Tooltip, ProgressBar,
 } from 'react-bootstrap';
 import Decimal from 'decimal.js';
 import toFormat from 'toformat';
@@ -30,13 +31,13 @@ const DepoCalculator = () => {
 
   const handleChangeAmount = (e) => {
     if (!e.target.validity.badInput) {
-      MainStore.calculator.amount = e.target.value;
+      MainStore.calculator.amount = Number(e.target.value);
     }
   };
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      При включенной капитализации проценты будут начисляться также на уже начисленные проценты за вклад
+      При включенной капитализации проценты будут начисляться также на уже начисленное вознаграждение
     </Tooltip>
   );
 
@@ -69,7 +70,11 @@ const DepoCalculator = () => {
           <Form.Label>Сумма</Form.Label>
           <Form.Control type="number" min={0} value={MainStore.calculator.amount} onChange={handleChangeAmount} />
         </Form.Group>
-        <p style={{ whiteSpace: 'pre' }}>{`Через ${MainStore.calculator.term} месяцев: \n${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
+        <p style={{ whiteSpace: 'pre' }}>{`Через ${MainStore.calculator.term} месяцев будет накоплено: \n${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
+        <ProgressBar>
+          <ProgressBar variant="success" now={MainStore.basePercentage} key={1} />
+          <ProgressBar variant="warning" now={MainStore.rewardPercentage} key={2} />
+        </ProgressBar>
       </Form>
     </>
   );

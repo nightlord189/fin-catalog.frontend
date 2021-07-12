@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-else-return */
 /* eslint-disable no-mixed-operators */
 import { makeAutoObservable } from 'mobx';
@@ -67,6 +68,14 @@ class MainStore {
       }
       return amountDecimal.plus(result);
     }
+  }
+
+  get rewardPercentage() {
+    return ((this.depositResult.toFixed(2) - this.calculator.amount.toFixed(2)) / this.depositResult.toFixed(2) * 100.0).toFixed(0);
+  }
+
+  get basePercentage() {
+    return 100 - this.rewardPercentage;
   }
 }
 
