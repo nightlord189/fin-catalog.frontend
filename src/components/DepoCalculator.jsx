@@ -10,11 +10,15 @@ import MainStore from '../store/main.js';
 
 const DepoCalculator = () => {
   const handleChangeRate = (e) => {
-    MainStore.calculator.rate = e.target.value;
+    if (!e.target.validity.badInput) {
+      MainStore.calculator.rate = e.target.value;
+    }
   };
 
   const handleChangeTerm = (e) => {
-    MainStore.calculator.term = e.target.value;
+    if (!e.target.validity.badInput) {
+      MainStore.calculator.term = e.target.value;
+    }
   };
 
   const handleChangeCapitalization = (e) => {
@@ -33,7 +37,7 @@ const DepoCalculator = () => {
       <Form>
         <Form.Group controlId="rate">
           <Form.Label>Ставка, %</Form.Label>
-          <Form.Control type="number" value={MainStore.calculator.rate} onChange={handleChangeRate} />
+          <Form.Control type="number" min={0} value={MainStore.calculator.rate} onChange={handleChangeRate} />
         </Form.Group>
         <Form.Group controlId="term">
           <Form.Label>Срок, месяцев</Form.Label>
