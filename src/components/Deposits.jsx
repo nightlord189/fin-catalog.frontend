@@ -21,6 +21,7 @@ const Deposits = () => {
     <Container className="mt-2" fluid="md">
       <Row>
         <Col sm={8}>
+          <h3>Депозиты в банках Казахстана</h3>
           <Table striped bordered hover size="sm" className="w-auto small">
             <thead>
               <tr>

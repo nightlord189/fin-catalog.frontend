@@ -1,5 +1,5 @@
-/* eslint-disable no-mixed-operators */
 /* eslint-disable max-len */
+/* eslint-disable no-mixed-operators */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-useless-concat */
 /* eslint-disable react/no-unescaped-entities */
@@ -70,7 +70,9 @@ const DepoCalculator = () => {
           <Form.Label>Сумма</Form.Label>
           <Form.Control type="number" min={0} value={MainStore.calculator.amount} onChange={handleChangeAmount} />
         </Form.Group>
-        <p style={{ whiteSpace: 'pre' }}>{`Через ${MainStore.calculator.term} месяцев будет накоплено: \n${MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
+        <p>{`Через ${MainStore.calculator.term} месяцев будет накоплено: `}</p>
+        <p className="font-weight-bold">{MainStore.depositResult.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}</p>
+        <p>{`Вознаграждение: ${MainStore.reward.toFormat(1, { decimalSeparator: '.', groupSeparator: ' ' })}`}</p>
         <ProgressBar>
           <ProgressBar variant="success" now={MainStore.basePercentage} key={1} />
           <ProgressBar variant="warning" now={MainStore.rewardPercentage} key={2} />

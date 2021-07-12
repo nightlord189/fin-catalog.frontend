@@ -70,6 +70,11 @@ class MainStore {
     }
   }
 
+  get reward() {
+    const amountDecimal = new Decimal(this.calculator.amount);
+    return this.depositResult.minus(amountDecimal);
+  }
+
   get rewardPercentage() {
     return ((this.depositResult.toFixed(2) - this.calculator.amount.toFixed(2)) / this.depositResult.toFixed(2) * 100.0).toFixed(0);
   }
