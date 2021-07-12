@@ -40,7 +40,7 @@ const Deposits = () => {
               MainStore.deposits.map((depo) => (
                 <tr key={depo.id} onClick={onDepoClick(depo.id)}>
                   <td>{depo.bank}</td>
-                  <td>{depo.name}</td>
+                  <td><a href={depo.link}>{depo.name}</a></td>
                   <td>{depo.currency}</td>
                   <td>{depo.rate}</td>
                   <td>{depo.term}</td>
